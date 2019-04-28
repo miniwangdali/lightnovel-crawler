@@ -1,0 +1,10 @@
+$narrowWidth: 800px;
+
+@mixin narrow-screen {
+  @media screen and (max-width: $narrowWidth) {
+    @content;
+  }
+}
+@mixin text-shadow-border {
+  text-shadow: $dark 0 0 $space--xsmall;
+}

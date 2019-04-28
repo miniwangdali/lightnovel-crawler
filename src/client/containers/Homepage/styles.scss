@@ -1,0 +1,76 @@
+.Homepage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding: 0 $space--medium $space--medium $space--medium;
+  &__browser-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    flex-basis: $space--xxlarge * 10;
+    .url-container {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: $space--small;
+      font-size: $font--small;
+      line-height: 1.5;
+      align-items: center;
+      color: $text-01;
+      .input--url {
+        flex: 1;
+        margin-right: 1rem;
+      }
+      .button--go-to {
+        svg {
+          width: 16px;
+          height: 16px;
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .iframe--target-page {
+      flex: 1;
+      border: none;
+    }
+  }
+  &__action-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    flex-basis: $space--xxlarge;
+    button {
+      margin-right: $space--medium;
+    }
+    .skeleton--analyzing {
+      width: auto;
+      flex: 1;
+      margin-right: $space--medium;
+      height: $space--large;
+    }
+  }
+  &__input-container {
+    padding: 0 $space--small;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    min-height: $space--large;
+    .label--meta-data {
+      margin-right: $space--medium;
+    }
+    .input--meta-data {
+      flex: 1;
+      &[type=file] {
+        display: none;
+      }
+    }
+  }
+}
