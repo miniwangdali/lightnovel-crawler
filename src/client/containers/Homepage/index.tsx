@@ -124,10 +124,13 @@ class Homepage extends React.Component<any, HomepageState> {
         }, [])
       );
 
-      const contents = this.state.postBlocks.map(b => {
+      const contents = this.state.postBlocks.map((b, i) => {
         parser.removeUselessImages(b.postContent);
         return {
-          data: `<section>${b.postContent.innerHTML}</section>`
+          title: b.postContent.innerText.trim().split(/[\r\n]/, 1)[0],
+          data: `<section>${b.postContent.innerHTML.replace(/<br>\\*/g, "</p><p>")}</section>`,
+          excludeFromToc: i === 0,
+          beforeToc: i === 0
         };
       });
       const text = this.state.postBlocks.reduce((accu, b, i) => accu.concat(b.postContent.innerText), []);

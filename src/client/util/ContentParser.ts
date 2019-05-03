@@ -30,6 +30,13 @@ export const getAuthor = (content: HTMLElement) => {
   }
 };
 
+const hasPostscript = (text: string) => {
+  for (let i = 0; i < keywords.postscript.length; i++) {
+    if (text.startsWith(keywords.postscript[i])) return true;
+  }
+  return false;
+};
+
 export const getPostBlocks = async (postlist: Element) => {
   const blockDivElements = filter(postlist.children, div => div.id.startsWith('post_'));
   const postBlocks: PostBlock[] = [];
@@ -40,12 +47,11 @@ export const getPostBlocks = async (postlist: Element) => {
     forEach(postContent.getElementsByClassName(imgZoomClassName), (target: HTMLElement, i: number) => {
       target.insertAdjacentElement('beforebegin', images[i].targetImgElement);
     });
-    
     postBlocks.push({
       images,
       postContent
     });
-    if (postContent.innerText.trim().startsWith(keywords.postscript)) break;
+    if (hasPostscript(postContent.innerText.trim())) break;
   }
 
   return postBlocks;

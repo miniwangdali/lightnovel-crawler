@@ -39,6 +39,7 @@ const generateEpub = async (options: EpubOptions) => {
     await new Epub({
       ...options,
       version: 3,
+      tocTitle: '目录',
       appendChapterTitles: false,
     });
   } catch (e) {
