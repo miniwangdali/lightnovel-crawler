@@ -72,9 +72,20 @@ class Homepage extends React.Component<any, HomepageState> {
   };
 
   private scrollingListener = () => {
-    if (this.targetIframe.current.contentWindow.document.scrollingElement.scrollTop === this.lastScrollTop) {
+    const scrollingElement = this.targetIframe.current.contentWindow.document.scrollingElement;
+    if (scrollingElement.scrollTop === this.lastScrollTop) {
       clearInterval(this.scrollingTimer);
-      this.setState({ iFrameDocument: this.targetIframe.current.contentWindow.document }, () => this.parseContent());
+      if (Math.ceil(scrollingElement.scrollTop + scrollingElement.clientHeight) >= scrollingElement.scrollHeight - 5) {
+        this.setState({ iFrameDocument: this.targetIframe.current.contentWindow.document }, () => this.parseContent());
+        return;
+      } else {
+        scrollingElement.scrollTo({
+          top: scrollingElement.scrollHeight,
+          behavior: 'smooth'
+        });
+        this.scrollingTimer = setInterval(debounce(this.scrollingListener, 50), 100) as unknown as number;
+        return;
+      }
     }
     this.lastScrollTop = this.targetIframe.current.contentWindow.document.scrollingElement.scrollTop;
   };
@@ -86,7 +97,7 @@ class Homepage extends React.Component<any, HomepageState> {
       const postlist = iFrameDocument.querySelector("div#wp div#ct div#postlist");
       const postBlocks = await parser.getPostBlocks(postlist);
       const author = parser.getAuthor(postBlocks[0].postContent);
-      
+
       this.setState({
         title,
         author,
@@ -129,7 +140,6 @@ class Homepage extends React.Component<any, HomepageState> {
         return {
           title: b.postContent.innerText.trim().split(/[\r\n]/, 1)[0],
           data: `<section>${b.postContent.innerHTML.replace(/<br>\\*/g, "</p><p>")}</section>`,
-          excludeFromToc: i === 0,
           beforeToc: i === 0
         };
       });
