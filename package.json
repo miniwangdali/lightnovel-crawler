@@ -8,8 +8,8 @@
     "build": "npm run build:server && npm run build:client",
     "build:server": "tsc",
     "build:client": "webpack --config ./webpack/webpack.dev.config.js",
-    "dev": "nodemon --watch ./src",
-    "dev:all": "cross-env FORCE_COLOR=1 npm-run-all -l -s dev:client dev:server",
+    "dev": "nodemon --watch ./src/server",
+    "dev:all": "cross-env NODE_ENV=development FORCE_COLOR=1 npm-run-all -l -p dev:client dev:server",
     "dev:client": "npm run build:client",
     "dev:server": "npm run build:server && electron ./build/server/main.js"
   },

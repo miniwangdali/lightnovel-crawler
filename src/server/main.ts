@@ -55,3 +55,10 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   app.quit();
 });
+
+if (process.env.NODE_ENV === 'development') {
+  fs.watchFile(path.resolve(__dirname, '../../dist/bundle.js'), { interval : 1000 }, (curr, prev) => {
+    window.reload();
+    console.info('Window reloaded...');
+  });
+}

@@ -41,7 +41,7 @@
   &__action-container {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     flex-basis: $space--xxlarge;
@@ -59,7 +59,7 @@
     padding: 0 $space--small;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     min-height: $space--large;

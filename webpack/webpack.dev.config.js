@@ -97,5 +97,6 @@ module.exports = {
       template: path.resolve(__dirname, '../src/server/views/index.html')
     })
   ],
-  target: "electron-renderer"
+  target: "electron-renderer",
+  watch: true
 };
