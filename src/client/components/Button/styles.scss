@@ -1,0 +1,29 @@
+.Button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  outline: none;
+  border: none;
+  background-color: rgba($primary, 0.7);
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+  color: $white;
+  padding: $space--xsmall $space--small;
+  border-radius: $border-radius--mlarge;
+  font-size: $font--medium;
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:not(:disabled) {
+    &:hover {
+      background-color: rgba($primary, 1);
+    }
+    &:active {
+      background-color: rgba(darken($primary, 10), 1);
+    }
+  }
+  svg {
+    fill: $white;
+  }
+}

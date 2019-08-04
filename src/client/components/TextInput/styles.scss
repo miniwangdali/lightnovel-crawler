@@ -1,0 +1,54 @@
+.TextInput {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  border-radius: $border-radius--mlarge;
+  overflow: hidden;
+  background-color: rgba($white, 0.7);
+  transition: background-color 0.25s ease;
+  &:hover,
+  &:focus,
+  &.active {
+    background-color: rgba($white, 1);
+  }
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    font-size: $font--medium;
+    padding: $space--xsmall 0 $space--xsmall $space--small;
+  }
+  &__input--main {
+    flex: 1;
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: $font--medium;
+  }
+  &__divider {
+    width: $space--xxxsmall;
+    background-color: $text-03;
+    margin: $space--xsmall;
+  }
+  &__button--submit {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    outline: none;
+    border: none;
+    background-color: rgba($primary, 0.7);
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+    color: $white;
+    &:hover {
+      background-color: rgba($primary, 1);
+    }
+    &:active {
+      background-color: rgba(darken($primary, 10), 1);
+    }
+    svg {
+      fill: $white;
+    }
+  }
+}

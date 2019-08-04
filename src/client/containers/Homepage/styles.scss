@@ -5,46 +5,37 @@
   align-items: stretch;
   height: 100%;
   width: 100%;
-  padding: 0 $space--medium $space--medium $space--medium;
+  padding: $space--medium;
+  background: $background-primary;
+  &.loading {
+    filter: blur(1px);
+  }
   &__browser-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     flex-wrap: nowrap;
     flex-grow: 1;
-    flex-basis: $space--xxlarge * 10;
-    .url-container {
-      display: flex;
-      flex-wrap: nowrap;
-      padding: $space--small;
-      font-size: $font--small;
-      line-height: 1.5;
-      align-items: center;
-      color: $text-01;
-      .input--url {
-        flex: 1;
-        margin-right: 1rem;
-      }
-      .button--go-to {
-        svg {
-          width: 16px;
-          height: 16px;
-          transform: rotate(180deg);
-        }
-      }
-    }
     .iframe--target-page {
       flex: 1;
+      margin: $space--medium 0;
       border: none;
+      border-radius: $border-radius--mlarge;
     }
   }
-  &__action-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+  &__interface-container {
+    display: grid;
+    grid-template-columns: 1fr $space--xxlarge * 2;
+    grid-template-rows: repeat(3, 1fr);
+    gap: $space--small;
+    .input--output-folder {
+      display: none;
+    }
+  }
+  &__actions-container {
+    grid-column: 2;
+    grid-row: 1 / span 3;
     width: 100%;
-    flex-basis: $space--xxlarge;
     button {
       margin-right: $space--medium;
     }
@@ -68,7 +59,7 @@
     }
     .input--meta-data {
       flex: 1;
-      &[type=file] {
+      &[type="file"] {
         display: none;
       }
     }

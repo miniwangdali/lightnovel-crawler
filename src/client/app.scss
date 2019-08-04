@@ -1,80 +1,55 @@
-@import './scss/index.scss';
+@import "./scss/index.scss";
 
-html, body {
+@font-face {
+  font-family: AliPuHui;
+  src: url("./assets/fonts/Alibaba-PuHuiTi-Regular.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: AliPuHui;
+  src: url("./assets/fonts/Alibaba-PuHuiTi-Light.otf") format("opentype");
+  font-weight: 300;
+}
+@font-face {
+  font-family: AliPuHui;
+  src: url("./assets/fonts/Alibaba-PuHuiTi-Medium.otf") format("opentype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: AliPuHui;
+  src: url("./assets/fonts/Alibaba-PuHuiTi-Bold.otf") format("opentype");
+  font-weight: bold;
+}
+@font-face {
+  font-family: AliPuHui;
+  src: url("./assets/fonts/Alibaba-PuHuiTi-Heavy.otf") format("opentype");
+  font-weight: 900;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-size: 16px;
+  font-size: $font--medium;
 }
 
 #lightnovel-crawler-root {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: $primary;
 }
 
 * {
-  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: geometricPrecision;
+  font-family: AliPuHui, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
 
-button, .button {
-  height: $space--large;
-  background: none;
-  border: none;
-  outline: none;
-  padding: $space--small;
-  background-color: $primary;
-  cursor: pointer;
-  box-shadow: 0 0 0 $border-width--small $field-01;
-  transition: background-color 0.125s ease;
-  &:disabled {
-    cursor: not-allowed;
-  }
-  &:hover {
-    background-color: $field-01;
-  }
-  &:active {
-    background-color: $field-02;
-  }
-  &.small {
-    height: $space--mlarge;
-    padding: $space--xsmall;
-  }
-  &.large {
-    height: $space--xlarge;
-    padding: $space--medium;
-  }
-}
-
-input, .input {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: $text-01;
-  padding: $space--small $space--small ($space--small - $space--xxsmall) $space--small;
-  box-shadow: 0 $border-width--small 0 0 $field-01;
-  transition: background-color 0.125s ease,
-              box-shadow 0.125s ease;
-  &:disabled {
-    cursor: not-allowed;
-  }
-  &:hover {
-    background-color: $field-01;
-  }
-  &:focus {
-    background-color: $field-01;
-    box-shadow: 0 $border-width--small 0 0 $dark;
-  }
-}
-
-label, .label {
-  font-size: $font--small;
-  line-height: 1.5;
-}
-
-@import './components/Skeleton/styles.scss';
-@import './containers/Homepage/styles.scss';
+@import "./components/Button/styles.scss";
+@import "./components/Loading/styles.scss";
+@import "./components/TextInput/styles.scss";
+@import "./containers/Homepage/styles.scss";

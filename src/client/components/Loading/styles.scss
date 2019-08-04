@@ -1,0 +1,35 @@
+.Loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  display: none;
+  &.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  &__overlay {
+    background-color: rgba($dark, 0.3);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  &__loading-spinner {
+    width: $space--xxlarge;
+    height: $space--xxlarge;
+    border-radius: 50%;
+    border: solid $border-radius--medium $primary;
+    border-bottom-color: transparent;
+    animation-name: rotate;
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+}
