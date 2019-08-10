@@ -1,0 +1,24 @@
+.Messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  transition: all 0.25s ease;
+  > button {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
+  &.show {
+    bottom: 0;
+  }
+  &__container {
+    background-color: rgba($dark, 0.3);
+    padding: $space--medium;
+    border-radius: $border-radius--mlarge;
+  }
+}

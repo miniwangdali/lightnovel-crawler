@@ -1,4 +1,4 @@
-import { app, BrowserWindow, BrowserView, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, IpcMessageEvent } from "electron";
 import path from "path";
 import util from "util";
 import fs from "fs";
@@ -37,20 +37,28 @@ const generateEpub = async (options: EpubOptions) => {
       await writeFile(options.output.replace(".epub", ".txt"), options.text);
       delete options.text;
     }
-    await new Epub({
+    return new Epub({
       ...options,
       version: 3,
       tocTitle: "目录",
       appendChapterTitles: false
     });
   } catch (e) {
-    console.error(e);
+    throw e;
   }
 };
 
-ipcMain.on("create-epub", (event, options: EpubOptions) => {
-  generateEpub(options);
-});
+ipcMain.on(
+  "create-epub",
+  async (event: IpcMessageEvent, options: EpubOptions) => {
+    try {
+      await generateEpub(options);
+      event.sender.send("epub-created");
+    } catch (e) {
+      event.sender.send("create-epub-failed", e.message);
+    }
+  }
+);
 
 app.on("ready", createWindow);
 app.on("window-all-closed", () => {

@@ -5,12 +5,15 @@ import { debounce, isEmpty, get } from "lodash";
 import path from "path";
 import util from "util";
 import fs from "fs";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, shell } from "electron";
 
 import * as parser from "../../util/ContentParser";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import Loading from "../../components/Loading";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addMessage } from "../../store/messages/actions";
 
 const submitIcon = (
   <svg
@@ -24,6 +27,10 @@ const submitIcon = (
   </svg>
 );
 
+interface HomepageProps {
+  addMessage: Function;
+}
+
 export interface HomepageState {
   targetURL: string;
   urlValue: string;
@@ -36,14 +43,16 @@ export interface HomepageState {
   postBlocks: parser.PostBlock[];
 }
 
-class Homepage extends React.Component<any, HomepageState> {
+const name = "Homepage";
+
+class Homepage extends React.Component<HomepageProps, HomepageState> {
   private targetIframe: React.RefObject<HTMLIFrameElement> = React.createRef<
     HTMLIFrameElement
   >();
   private scrollingTimer: number;
   private lastScrollTop: number;
 
-  constructor(props: any) {
+  constructor(props: HomepageProps) {
     super(props);
     this.state = {
       targetURL: "",
@@ -56,6 +65,31 @@ class Homepage extends React.Component<any, HomepageState> {
       outputFolder: path.resolve(__dirname),
       postBlocks: []
     };
+    ipcRenderer.on("epub-created", () => {
+      const targetFilePath = path.resolve(
+        this.state.outputFolder,
+        this.state.title
+      );
+      this.props.addMessage({
+        title: strings.Homepage.createBookSuccess,
+        description: (
+          <button
+            className={`${name}__openFileButton`}
+            onClick={this.openTargetFile.bind(this, targetFilePath)}
+          >
+            {targetFilePath}
+          </button>
+        ),
+        type: "success"
+      });
+    });
+    ipcRenderer.on("create-epub-failed", (event, arg) => {
+      this.props.addMessage({
+        title: strings.Homepage.createBookError,
+        description: arg,
+        type: "error"
+      });
+    });
   }
 
   private onURLInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,11 +159,15 @@ class Homepage extends React.Component<any, HomepageState> {
     try {
       const title = (iFrameDocument.querySelector(
         "#thread_subject"
-      ) as HTMLElement).innerText;
+      ) as HTMLElement).innerText.replace("/", "-");
       const postlist = iFrameDocument.querySelector(
         "div#wp div#ct div#postlist"
       );
       const postBlocks = await parser.getPostBlocks(postlist);
+      const images = postBlocks.reduce(
+        (accu, value) => accu.concat(...value.images),
+        []
+      );
       const author = parser.getAuthor(postBlocks[0].postContent);
 
       this.setState(
@@ -143,7 +181,10 @@ class Homepage extends React.Component<any, HomepageState> {
         }
       );
     } catch (e) {
-      console.error(e);
+      this.props.addMessage({
+        title: e.message,
+        type: "error"
+      });
       this.setState({ analyzing: false });
     }
   };
@@ -159,12 +200,18 @@ class Homepage extends React.Component<any, HomepageState> {
       try {
         await mkdir(novelFolderPath);
       } catch (err) {
-        console.warn(err);
+        this.props.addMessage({
+          title: err.message,
+          type: "warning"
+        });
       }
       try {
         await mkdir(imagesFolderPath);
       } catch (err) {
-        console.warn(err);
+        this.props.addMessage({
+          title: err.message,
+          type: "warning"
+        });
       }
       await Promise.all(
         this.state.postBlocks.reduce<Promise<void>[]>((accu, b, i) => {
@@ -207,7 +254,10 @@ class Homepage extends React.Component<any, HomepageState> {
         text
       });
     } catch (e) {
-      console.error(e);
+      this.props.addMessage({
+        title: e.message,
+        type: "error"
+      });
     }
   };
 
@@ -236,6 +286,10 @@ class Homepage extends React.Component<any, HomepageState> {
     });
   };
 
+  public openTargetFile = (filepath: string) => {
+    shell.openItem(filepath);
+  };
+
   render() {
     const {
       targetURL,
@@ -256,8 +310,8 @@ class Homepage extends React.Component<any, HomepageState> {
     return (
       <React.Fragment>
         {<Loading active={analyzing} />}
-        <div className={classnames("Homepage", { loading: analyzing })}>
-          <div className="Homepage__browser-container">
+        <div className={classnames(name, { loading: analyzing })}>
+          <div className={`${name}__browser-container`}>
             <TextInput
               id="input__webpage-url"
               label={strings.Homepage.targetURL}
@@ -277,8 +331,8 @@ class Homepage extends React.Component<any, HomepageState> {
               />
             )}
           </div>
-          <div className="Homepage__interface-container">
-            <div className="Homepage__actions-container">
+          <div className={`${name}__interface-container`}>
+            <div className={`${name}__actions-container`}>
               <Button disabled={unableToProcess} onClick={this.analyze}>
                 {strings.Homepage.analyze}
               </Button>
@@ -330,4 +384,11 @@ class Homepage extends React.Component<any, HomepageState> {
   }
 }
 
-export default Homepage;
+const mapDispatchToProps = dispatch => ({
+  addMessage: bindActionCreators(addMessage, dispatch)
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Homepage);

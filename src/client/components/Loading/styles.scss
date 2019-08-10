@@ -22,6 +22,7 @@
     right: 0;
   }
   &__loading-spinner {
+    z-index: 10;
     width: $space--xxlarge;
     height: $space--xxlarge;
     border-radius: 50%;

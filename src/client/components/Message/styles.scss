@@ -1,0 +1,54 @@
+.Message {
+  background-color: $field-01;
+  min-height: $space--large;
+  padding: $space--small;
+  border-radius: $border-radius--mlarge;
+  display: grid;
+  grid-template-columns: $space--mlarge 1fr $space--mlarge;
+  grid-template-rows: $space--mlarge 1fr;
+  grid-gap: $space--small;
+  width: 500px;
+  &.success {
+    background-color: $success;
+  }
+  &.warning {
+    background-color: $warning;
+  }
+  &.error {
+    background-color: $danger;
+    color: $white;
+    fill: $white;
+  }
+  &__type-icon,
+  &__dismiss-icon {
+    grid-row: 1 / 2;
+  }
+  &__type-icon {
+    grid-column: 1 / 2;
+  }
+  &__dismiss-icon {
+    grid-column: 3 / 4;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    border-radius: $border-radius--mlarge;
+    &:hover {
+      background-color: rgba($dark, 0.1);
+    }
+    &:active {
+      background-color: rgba($dark, 0.3);
+    }
+  }
+  &__title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__description {
+    grid-column: 2 / 3;
+    grid-row-start: 2;
+  }
+}

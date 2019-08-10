@@ -7,10 +7,12 @@ export interface IButtonProps {
   [x: string]: any;
 }
 
+const name = "Button";
+
 const Button = (props: IButtonProps) => {
   const { className, children, ...rest } = props;
   return (
-    <button className={classnames("Button", className)} {...rest}>
+    <button className={classnames(name, className)} {...rest}>
       {children}
     </button>
   );

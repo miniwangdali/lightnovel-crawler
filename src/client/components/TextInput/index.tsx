@@ -15,6 +15,8 @@ interface TextInputState {
   active: boolean;
 }
 
+const name = "TextInput";
+
 class TextInput extends React.PureComponent<TextInputProps, TextInputState> {
   constructor(props: TextInputProps) {
     super(props);
@@ -23,14 +25,14 @@ class TextInput extends React.PureComponent<TextInputProps, TextInputState> {
     };
   }
 
-  onInputFocus: FocusEventHandler<HTMLInputElement> = e => {
+  private onInputFocus: FocusEventHandler<HTMLInputElement> = e => {
     this.setState({ active: true });
     if (typeof this.props.onFocus === "function") {
       this.props.onFocus();
     }
   };
 
-  onInputBlur: FocusEventHandler<HTMLInputElement> = e => {
+  private onInputBlur: FocusEventHandler<HTMLInputElement> = e => {
     this.setState({ active: false });
     if (typeof this.props.onBlur === "function") {
       this.props.onBlur();
@@ -49,21 +51,21 @@ class TextInput extends React.PureComponent<TextInputProps, TextInputState> {
     } = this.props;
     const { active } = this.state;
     return (
-      <div className={classnames("TextInput", { active }, className)}>
+      <div className={classnames(name, { active }, className)}>
         {label && (
           <React.Fragment>
-            <label className="TextInput__label">{label}</label>
-            <span className="TextInput__divider" />
+            <label className={`${name}__label`}>{label}</label>
+            <span className={`${name}__divider`} />
           </React.Fragment>
         )}
         <input
-          className="TextInput__input--main"
+          className={`${name}__input--main`}
           {...rest}
           onFocus={this.onInputFocus}
           onBlur={this.onInputBlur}
         />
         {hasSubmit && (
-          <button className="TextInput__button--submit" onClick={onSubmit}>
+          <button className={`${name}__button--submit`} onClick={onSubmit}>
             {submitText}
           </button>
         )}

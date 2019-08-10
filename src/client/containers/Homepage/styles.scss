@@ -10,6 +10,13 @@
   &.loading {
     filter: blur(1px);
   }
+  &__progress-block {
+    background-color: rgba($white, 0.7);
+    z-index: 10;
+    border-radius: $border-radius--mlarge;
+    padding: $space--xsmall $space--small;
+    margin: $space--small;
+  }
   &__browser-container {
     display: flex;
     flex-direction: column;
@@ -62,6 +69,18 @@
       &[type="file"] {
         display: none;
       }
+    }
+  }
+  @at-root &__openFileButton {
+    outline: none;
+    background: none;
+    border: none;
+    border-radius: $border-radius--medium;
+    background-color: transparent;
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba($dark, 0.1);
     }
   }
 }

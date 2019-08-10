@@ -8,12 +8,14 @@ interface LoadingProps {
   [x: string]: any;
 }
 
+const name = "Loading";
+
 const Loading = (props: LoadingProps) => {
   const { active, children, className, ...rest } = props;
   return (
-    <div className={classnames("Loading", { active }, className)} {...rest}>
-      <div className="Loading__overlay" />
-      <div className="Loading__loading-spinner" />
+    <div className={classnames(name, { active }, className)} {...rest}>
+      <div className={`${name}__overlay`} />
+      <div className={`${name}__loading-spinner`} />
       {children}
     </div>
   );

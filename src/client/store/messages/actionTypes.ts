@@ -1,0 +1,5 @@
+const PREFIX = "MESSAGES";
+
+export const ADD_MESSAGE = `${PREFIX}/ADD_MESSAGE`;
+
+export const REMOVE_MESSAGE = `${PREFIX}/REMOVE_MESSAGE`;
