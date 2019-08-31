@@ -32,7 +32,7 @@ So I am sorry that there is not a plan of the first reliable release.
 4. Edit the title and the author as needed. For example, you would like to remove `\` or any invalid character in the filename.
 5. Click on `生成`(Generate) and wait shortly. You will see files generated in your output folder.
 
-*No error or success messages yet😔*
+~*No error or success messages yet😔*~
 
 
 
