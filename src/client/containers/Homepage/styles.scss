@@ -46,6 +46,13 @@
     button {
       margin-right: $space--medium;
     }
+    .button--images-preview {
+      margin-top: $space--small;
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
     .skeleton--analyzing {
       width: auto;
       flex: 1;

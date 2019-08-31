@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect
@@ -13,6 +13,7 @@ import store from "./store";
 
 import Homepage from "./containers/Homepage";
 import Messages from "./containers/Messages";
+import ImageGallery from "./containers/ImageGallery";
 
 const rootDivId = "lightnovel-crawler-root";
 
@@ -21,10 +22,11 @@ class App extends React.Component {
     return (
       <ReduxProvider store={store}>
         <Router>
-          <Messages />
-          <Switch>
-            <Route path="/*" component={Homepage} />
-          </Switch>
+          <React.Fragment>
+            <Messages />
+            <Route path="/" component={Homepage} />
+            <Route path="/images-preview" component={ImageGallery} />
+          </React.Fragment>
         </Router>
       </ReduxProvider>
     );

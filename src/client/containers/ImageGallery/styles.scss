@@ -1,0 +1,88 @@
+.ImageGallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($dark, 0.3);
+  padding: $space--medium;
+  &__container {
+    background-color: $white;
+    width: 100%;
+    height: 100%;
+    padding: $space--xlarge $space--medium $space--medium $space--medium;
+    border-radius: $border-width--mlarge;
+    position: relative;
+  }
+  &__action-bar {
+    position: absolute;
+    left: $space--small;
+    top: $space--small;
+    padding: $space--xsmall $space--small;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    .description-item {
+      margin-right: $space--medium;
+    }
+  }
+  &__button--close {
+    position: absolute;
+    right: $space--small;
+    top: $space--small;
+    background-color: transparent;
+    padding: $space--xsmall;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition: background-color 0.25s ease;
+    &:not(:disabled) {
+      &:hover {
+        background-color: rgba($dark, 0.1);
+      }
+      &:active {
+        background-color: rgba(darken($dark, 10%), 0.3);
+      }
+    }
+    svg {
+      fill: $dark;
+    }
+  }
+  &__list--images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12 * $space--medium, 1fr));
+    grid-gap: $space--medium;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    .list-item--image-item {
+      position: relative;
+      width: 100%;
+      height: 16 * $space--medium;
+      border-radius: $border-radius--mlarge;
+      border: 2px solid transparent;
+      overflow: hidden;
+      transition: border 0.25s ease;
+      display: flex;
+      justify-content: stretch;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      &:hover {
+        border: 2px solid lighten($primary, 30%);
+      }
+      &.selected {
+        border: 2px solid $primary;
+      }
+      .checkbox--image-item-checkbox {
+        position: absolute;
+        top: $space--small;
+        right: $space--small;
+      }
+    }
+  }
+}

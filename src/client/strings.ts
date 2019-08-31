@@ -10,11 +10,19 @@ export const Homepage = {
   image: "图片",
   word: "字",
   createBookSuccess: "创建书籍成功！",
-  createBookError: "创建书籍失败！"
+  createBookError: "创建书籍失败！",
+  imagePreview: "查看图片"
+};
+
+export const ImageGallery = {
+  selecting: "已选择",
+  picNum: "张图片",
+  total: "共"
 };
 
 const strings = {
   Homepage,
+  ImageGallery,
   keywords
 };
 

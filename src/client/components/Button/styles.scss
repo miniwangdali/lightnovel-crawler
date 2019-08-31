@@ -20,7 +20,7 @@
       background-color: rgba($primary, 1);
     }
     &:active {
-      background-color: rgba(darken($primary, 10), 1);
+      background-color: rgba(darken($primary, 10%), 1);
     }
   }
   svg {

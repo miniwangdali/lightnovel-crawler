@@ -1,0 +1,50 @@
+.Checkbox {
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    margin: 0;
+  }
+  .box {
+    width: $space--medium;
+    height: $space--medium;
+    border: $border-width--small solid rgba($dark, 0.3);
+    border-radius: $border-radius--medium;
+    background-color: transparent;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: $space--xxxsmall;
+    transition: all 0.125s ease-out;
+    &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      background-color: $primary;
+      transition: all 0.125s ease-out;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      width: $space--medium;
+      height: $space--medium;
+      border: $border-width--small solid $primary;
+      border-radius: $border-radius--medium;
+      transform: scale(0);
+      opacity: 1;
+      z-index: 10;
+    }
+    &.checked {
+      border: $border-width--small solid $primary;
+      &::after {
+        width: 100%;
+        height: 100%;
+      }
+      &::before {
+        transform: scale(1.5);
+        opacity: 0;
+        transition: all 0.125s ease-out;
+      }
+    }
+  }
+}

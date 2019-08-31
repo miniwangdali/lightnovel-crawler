@@ -14,6 +14,9 @@ import Loading from "../../components/Loading";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addMessage } from "../../store/messages/actions";
+import { Link } from "react-router-dom";
+import { setImageList } from "../../store/images/actions";
+import { ImageStateEntity } from "../../store/images/reducers";
 
 const submitIcon = (
   <svg
@@ -28,7 +31,9 @@ const submitIcon = (
 );
 
 interface HomepageProps {
+  images: ImageStateEntity[];
   addMessage: Function;
+  setImageList: Function;
 }
 
 export interface HomepageState {
@@ -168,6 +173,8 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
         (accu, value) => accu.concat(...value.images),
         []
       );
+      this.props.setImageList(images.map(i => i.originalSrc));
+      console.log(images);
       const author = parser.getAuthor(postBlocks[0].postContent);
 
       this.setState(
@@ -191,6 +198,7 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
 
   private generateBook = async () => {
     try {
+      this.setState({ analyzing: true });
       const mkdir = util.promisify(fs.mkdir);
       const novelFolderPath = path.resolve(
         this.state.outputFolder,
@@ -259,6 +267,7 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
         type: "error"
       });
     }
+    this.setState({ analyzing: false });
   };
 
   private onMetadataInputChange(
@@ -291,6 +300,7 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
   };
 
   render() {
+    const { images } = this.props;
     const {
       targetURL,
       urlValue,
@@ -341,6 +351,13 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
                   {strings.Homepage.generate}
                 </Button>
               )}
+              {images.length > 0 && (
+                <Button className="button--images-preview">
+                  <Link to="/images-preview">
+                    {strings.Homepage.imagePreview}
+                  </Link>
+                </Button>
+              )}
             </div>
             <TextInput
               id="input__output-folder"
@@ -384,11 +401,16 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
   }
 }
 
+const mapStateToProps = state => ({
+  images: state.images.list
+});
+
 const mapDispatchToProps = dispatch => ({
-  addMessage: bindActionCreators(addMessage, dispatch)
+  addMessage: bindActionCreators(addMessage, dispatch),
+  setImageList: bindActionCreators(setImageList, dispatch)
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Homepage);
