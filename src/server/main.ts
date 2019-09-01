@@ -23,7 +23,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false
-    }
+    },
+    icon: path.resolve(__dirname, "../../build/icon.png")
   });
   // window.setMenu(null);
   window.loadFile(path.resolve(__dirname, "../../dist/index.html"));
