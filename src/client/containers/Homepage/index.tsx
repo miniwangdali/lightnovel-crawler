@@ -103,12 +103,14 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
 
   private onURLInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      this.setState({ targetURL: this.state.urlValue });
+      this.targetIframe.current.contentWindow.location.reload(true);
+      this.targetIframe.current.src = this.state.urlValue;
     }
   };
 
   private onURLGoToButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    this.setState({ targetURL: this.state.urlValue });
+    this.targetIframe.current.contentWindow.location.reload(true);
+    this.targetIframe.current.src = this.state.urlValue;
   };
 
   private onIframeChange = (e: React.ChangeEvent<HTMLIFrameElement>) => {
@@ -332,14 +334,12 @@ class Homepage extends React.Component<HomepageProps, HomepageState> {
               onKeyDown={this.onURLInputKeyDown}
               onSubmit={this.onURLGoToButtonClick}
             />
-            {targetURL.length > 0 && (
-              <iframe
-                ref={this.targetIframe}
-                src={targetURL}
-                onLoad={this.onIframeChange}
-                className="iframe--target-page"
-              />
-            )}
+            <iframe
+              ref={this.targetIframe}
+              src="https://www.lightnovel.cn"
+              onLoad={this.onIframeChange}
+              className="iframe--target-page"
+            />
           </div>
           <div className={`${name}__interface-container`}>
             <div className={`${name}__actions-container`}>
