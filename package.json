@@ -17,7 +17,7 @@
   "description": "The app can download lightnovels in the forum (https://www.lightnovel.cn). It is for personal use.",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "classnames": "^2.2.6",
     "core-js": "^3.0.1",
     "epub-gen": "^0.1.0",
